@@ -27,7 +27,7 @@ def Signal(m,q, name):
 
 if __name__ == '__main__':
     # Название сигнала
-    name_signal = 'rect'
+    name_signal = 'sin'
     # Волновое сопротивление свободного пространства
     W0 = 120.0 * np.pi
 
