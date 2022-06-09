@@ -1,40 +1,45 @@
 import numpy as np
 import requests
 import re
-import scipy
+import scipy.special
 
-from scipy import cluster
 import matplotlib.pyplot as plt
+
+# номер варианта
+n = 5
 
 url = 'https://jenyay.net/uploads/Student/Modelling/task_02_01.txt'
 
-n = 5
+rr = requests.get(url = url)
 
-r = requests.get(url = url)
+with open('index.html', 'w', encoding="utf-8") as file:
+    file.write(rr.text)
 
-with open('index.html', 'w') as file:
-    file.write(r.text)
-
-with open('index.html', 'r') as file:
+with open('index.html', 'r', encoding="utf-8") as file:
     data = file.readlines()
 
-s = re.sub("D|=|fmin|fmax|;|", "", data[(n - 1) * 2])
+
+data_1 = data[:]
+for i in range(20):
+    data_1.remove('\n')
+
+s = re.sub("D|=|fmin|fmax|;|", "", data_1[n-1])
 s1 = s.split()
 
 D = float(s1[1])
 Fmin = float(s1[2])
 Fmax = float(s1[3])
 
-c = 3*10**8
+c = 3108
 r = D/2
 
-f = np.linspace(Fmin, Fmax, 10**4)
+f = np.linspace(Fmin, Fmax, 104)
 
 la = np.zeros(f.size)
 k = np.zeros(f.size)
 for i in range(f.size):
     la[i] = c/f[i]
-    k[i] = (2*np.pi) / la[i]
+    k[i] = (2np.pi) / la[i]
 
 # Ф-ция Бесселя первого рода
 def Bess_1(i, x):
@@ -56,11 +61,11 @@ sigma = np.zeros(f.size)
 sum = np.zeros(f.size, dtype=complex)
 for i in range(f.size):
     for n in range(1, 20):
-        sum[i] += (-1)**n * (n + 0.5) * (b_n(n, k[i]*r) - a_n(n, k[i]*r))
-        sigma[i] = la[i]**2/np.pi * np.abs(sum[i])**2
+        sum[i] += (-1)n * (n + 0.5) * (b_n(n, k[i]r) - a_n(n, k[i]r))
+        sigma[i] = la[i]2/np.pi * np.abs(sum[i])2
 
 plt.grid()
-plt.plot(f*10**-9, sigma)
+plt.plot(f*10-9, sigma)
 plt.xlabel('Частота, ГГц')
 plt.ylabel('ЭПР')
 plt.savefig('График.jpeg')
