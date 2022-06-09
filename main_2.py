@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 
 url = 'https://jenyay.net/uploads/Student/Modelling/task_02_01.txt'
 
+n = 5
+
 r = requests.get(url = url)
 
 with open('index.html', 'w') as file:
@@ -16,7 +18,7 @@ with open('index.html', 'w') as file:
 with open('index.html', 'r') as file:
     data = file.readlines()
 
-s = re.sub("D|=|fmin|fmax|;|", "", data[8])
+s = re.sub("D|=|fmin|fmax|;|", "", data[(n - 1) * 2])
 s1 = s.split()
 
 D = float(s1[1])
