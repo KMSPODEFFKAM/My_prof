@@ -1,8 +1,8 @@
 import numpy as np
 import requests
 import re
+import scipy
 
-import scipy.special.cython_special
 from scipy import cluster
 import matplotlib.pyplot as plt
 
@@ -57,13 +57,9 @@ for i in range(f.size):
         sum[i] += (-1)**n * (n + 0.5) * (b_n(n, k[i]*r) - a_n(n, k[i]*r))
         sigma[i] = la[i]**2/np.pi * np.abs(sum[i])**2
 
-
-with open('Res_2zad.txt', 'w') as file:
-    file.write('Частота' + '\t' + 'ЭПР' + '\n')
-    for i in range(len(sigma)):
-        file.write(str(f[i]) + '\t' + str(sigma[i]) + '\n')
-    file.close()
-
 plt.grid()
 plt.plot(f*10**-9, sigma)
+plt.xlabel('Частота, ГГц')
+plt.ylabel('ЭПР')
+plt.savefig('График.jpeg')
 plt.show()
