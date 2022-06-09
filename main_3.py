@@ -38,7 +38,7 @@ if __name__ == '__main__':
     l = 250
 
     # Время расчета в отсчетах
-    maxTime = 300
+    maxTime = 1000
 
     # Размер области моделирования в отсчетах
     maxSize = 500
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     probePos = 60
 
     # Положение источника
-    sourcePos = 75
+    sourcePos = 250
 
     # Параметры поля
     mu = 1.0
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         Hy[sourcePos - 1] -= (Sc / W0) * Signal(0, q, name_signal)
         # Граничное условие
         Ez[0] = Ez[1]
-        Ez[-1] = Ez[-2]
+        Ez[-1] = 0
         # Расчет компоненты поля E
         Hy_shift = Hy[:-1]
         Ez[1:-1] = Ez[1:-1] + (Hy[1:] - Hy_shift) * Sc * W0 / eps
@@ -135,7 +135,6 @@ if __name__ == '__main__':
     # Отображение сигнала, сохраненного в датчике
     tlist = np.arange(maxTime)
     fig, ax = plt.subplots()
-    ax.set_xlim(0, maxTime * dt * 10 ** 6)
     ax.set_ylim(-1.1, 1.1)
     ax.set_xlabel('Время, мкс')
     ax.set_ylabel('Ez, В/м')
@@ -149,16 +148,18 @@ if __name__ == '__main__':
     spectr_entrance = fft.fft(Signal(0, i, name_signal)) / len(i)
     AS_exit = np.abs(spectr_exit)
     AS_entrance = np.abs(spectr_entrance)
-    ax.plot(i, AS_entrance)
-    ax.plot(i, AS_exit)
-    ax.set_xlim(0, 110)
+    ax.plot(i / dt * 10 ** -9, AS_entrance)
+    ax.plot(i / dt * 10 ** -9, AS_exit)
+    ax.set_xlabel('Частота, ГГц')
+    ax.set_ylabel('Вс/м')
+    ax.set_xlim(0, 0.4 * 10 ** 2)
     ax.grid()
 
     # Коэфф отражения
     fig, ax = plt.subplots()
-    ax.set_xlim(0, 110)
     G = AS_entrance / AS_exit
-    ax.plot(i, G)
-    ax.set_xlim(0, 80)
+    ax.plot(i / dt * 10 ** -9, G)
+    ax.set_xlabel('Частота, ГГц')
     ax.grid()
+    ax.set_xlim(0, 0.2 * 10 ** 2)
     plt.show()
