@@ -19,7 +19,7 @@ with open('index.html', 'r', encoding="utf-8") as file:
 data = file.readlines()
 
 
-data_1 = data[☺
+data_1 = data[:]
 for i in range(20):
 data_1.remove('\n')
 
