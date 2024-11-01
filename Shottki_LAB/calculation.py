@@ -5,7 +5,7 @@ def main(num_tr, f, teta, u, p):
     data = parametrs_tranzition.parametrs_tranzitions(num_tr)
 
     pc1max = formul.pc1max(teta=teta, Ec=u, Ec0=data.get('e_c0'), rc=data.get('r_s'),
-                            ri=data.get('r_i'), Icnas=0.2)
+                            ri=data.get('r_i'), Icnas=data.get('icnas'))
     ic1 = formul.Ic1(teta=teta, Ec=u, Ec0=data.get('e_c0'), rc=data.get('r_s'), ri=data.get('r_i'), Pc1=p)
     uc1 = formul.Uc1gr(teta=teta, Ec=u, Ec0=data.get('e_c0'), rc=data.get('r_s'), ri=data.get('r_i'), Ic1=ic1)
     rek = formul.Rek(Uc1gr=uc1, Ic1=ic1)
@@ -63,11 +63,12 @@ def main(num_tr, f, teta, u, p):
            'alfa': round(alfa, n),
            'beta': round(beta, n),
            'C0, пФ': round(c0, n),
+           'Ksi': round(ksi, n),
            'Сопротивление обратной связи, Ом': round(roc, n),
            'Мощность нагрузки, Вт': round(pn, n),
            'Активное сопротивление нагрузки, Ом': round(rn, n),
            'Реактивное сопротивление нагрузки, Ом': round(xn, n),
-           'Входная индуктивность, нГн': round(lvh, n),
+           'Входная индуктивность, пГн': round(lvh * 10 ** 3, n),
            'Входная емкасть, пФ': round(cvh * 10 ** 12, n),
            'Активное входное сопротивление, Ом': round(rvh, n),
            'Реактивное входное сопротивление, Ом': round(xvh, n),

@@ -246,6 +246,8 @@ def Xvh(f, Lvh, Cvh):
         return 2 * math.pi * f * Lvh - 1 / (2 * math.pi * f * Cvh)
     except TypeError:
         return None
+    except ZeroDivisionError:
+        return None
 
 def Ivh(ksi, f, ft, teta, Ic1):
     try:
@@ -263,6 +265,8 @@ def KU(Pn, Pvh):
     try:
         return Pn / Pvh
     except TypeError:
+        return None
+    except ZeroDivisionError:
         return None
 
 def KPD(Pn, Pvh, P0):
